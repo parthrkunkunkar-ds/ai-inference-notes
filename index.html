@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Inference | Peer Teaching Notes</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, sans-serif;
+            background: #080b12;
+            color: #e8edf5;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1100px, 90%);
+            margin: auto;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #202633;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: #2563eb;
+            filter: blur(180px);
+            opacity: 0.15;
+            top: -150px;
+            right: -100px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 7px 14px;
+            border: 1px solid #303846;
+            border-radius: 999px;
+            color: #8fb5ff;
+            font-size: 13px;
+            margin-bottom: 25px;
+            background: #101520;
+        }
+
+        h1 {
+            font-size: clamp(48px, 8vw, 88px);
+            line-height: 0.95;
+            letter-spacing: -4px;
+            margin-bottom: 25px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, #ffffff, #79a9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 700px;
+            color: #9da7b8;
+            font-size: 19px;
+            margin-bottom: 35px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 20px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .secondary {
+            border: 1px solid #303846;
+            color: #d9e0eb;
+            background: #10141d;
+        }
+
+        .secondary:hover {
+            border-color: #526078;
+            transform: translateY(-2px);
+        }
+
+        /* CONTENT */
+
+        section {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            color: #8e98aa;
+            margin-bottom: 35px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            border: 1px solid #202633;
+            background: #0d1119;
+            border-radius: 14px;
+            padding: 25px;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            border-color: #35445e;
+            transform: translateY(-3px);
+        }
+
+        .card-number {
+            color: #568cff;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+            font-size: 19px;
+        }
+
+        .card p {
+            color: #8f99aa;
+            font-size: 14px;
+        }
+
+        /* PDF */
+
+        .pdf-section {
+            background: #0a0e15;
+            border-top: 1px solid #202633;
+            border-bottom: 1px solid #202633;
+        }
+
+        .pdf-wrapper {
+            border: 1px solid #252d3a;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #11151e;
+        }
+
+        .pdf-header {
+            padding: 18px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #252d3a;
+        }
+
+        .pdf-header span {
+            color: #9da7b8;
+            font-size: 14px;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 750px;
+            border: none;
+            display: block;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: #697386;
+            font-size: 13px;
+        }
+
+        footer a {
+            color: #8fb5ff;
+            text-decoration: none;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero {
+                min-height: 75vh;
+            }
+
+            .pdf-viewer {
+                height: 600px;
+            }
+
+            .pdf-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HERO -->
+
+    <header class="hero">
+        <div class="container hero-content">
+
+            <div class="tag">
+                PEER TEACHING SESSION · 2026
+            </div>
+
+            <h1>
+                <span class="gradient">AI Inference</span>
+            </h1>
+
+            <p>
+                Understanding what happens after an AI model is trained,
+                how inference works, how models are deployed, and how
+                inference powers real-world AI applications.
+            </p>
+
+            <div class="buttons">
+                <a href="#notes" class="button primary">
+                    Read the Notes ↓
+                </a>
+
+                <a
+                    href="Beyond%20ML%20Inference%20Servers%202026.pdf"
+                    class="button secondary"
+                    download
+                >
+                    Download PDF
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- TOPICS -->
+
+    <section>
+        <div class="container">
+
+            <h2 class="section-title">
+                What these notes cover
+            </h2>
+
+            <p class="section-subtitle">
+                A technical overview prepared for a peer teaching session.
+            </p>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-number">01</div>
+                    <h3>AI Inference</h3>
+                    <p>
+                        Understanding inference and what happens when a
+                        trained model receives new input.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">02</div>
+                    <h3>Model Execution</h3>
+                    <p>
+                        Exploring how trained models process inputs and
+                        generate predictions or responses.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">03</div>
+                    <h3>Inference Systems</h3>
+                    <p>
+                        Looking at the infrastructure and systems required
+                        to run AI models in real-world environments.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">04</div>
+                    <h3>Deployment</h3>
+                    <p>
+                        Understanding how AI models move from development
+                        environments into production.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">05</div>
+                    <h3>Public AI Applications</h3>
+                    <p>
+                        Connecting inference concepts with AI systems
+                        people interact with in everyday life.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">06</div>
+                    <h3>Practical Understanding</h3>
+                    <p>
+                        Breaking down complex AI infrastructure into
+                        concepts that are easier to understand and explain.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- PDF -->
+
+    <section class="pdf-section" id="notes">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                Full Session Notes
+            </h2>
+
+            <p class="section-subtitle">
+                The complete 17-page reference material from the peer
+                teaching session.
+            </p>
+
+            <div class="pdf-wrapper">
+
+                <div class="pdf-header">
+
+                    <span>
+                        Beyond ML Inference Servers 2026.pdf
+                    </span>
+
+                    <a
+                        href="Beyond%20ML%20Inference%20Servers%202026.pdf"
+                        class="button secondary"
+                        download
+                    >
+                        Download
+                    </a>
+
+                </div>
+
+                <iframe
+                    class="pdf-viewer"
+                    src="Beyond%20ML%20Inference%20Servers%202026.pdf"
+                    title="AI Inference Notes">
+                </iframe>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="container">
+
+            Peer Teaching Session · AI Inference · 2026
+
+            <br><br>
+
+            Created by
+            <a
+                href="https://github.com/parthrkunkunkar-ds"
+                target="_blank"
+            >
+                Parth Kunkunkar
+            </a>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>
